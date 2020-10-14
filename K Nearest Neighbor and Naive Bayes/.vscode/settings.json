@@ -1,0 +1,23 @@
+{
+    "cSpell.words": [
+        "Lemmatization",
+        "Lemmatize",
+        "Lemmatizer",
+        "Multinomial",
+        "asarray",
+        "astype",
+        "hstack",
+        "itertools",
+        "lxml",
+        "nasarray",
+        "nltk",
+        "numpy",
+        "punkt",
+        "rindex",
+        "scipy",
+        "scrapy",
+        "sklearn",
+        "timeit",
+        "ttest"
+    ]
+}
