@@ -364,6 +364,8 @@ class KNN:
         self.k = k
 
     def calculate_distance(self, train_matrix, test_matrix, heuristic):
+        if heuristic == "hamming":
+            heuristic = "euclidean"
         return pairwise_distances(train_matrix, test_matrix, metric = heuristic)
        
 
@@ -420,9 +422,9 @@ class NaiveBayes:
         self.topic_wise_probability_matrices = numpy.concatenate((topic_wise_probability))
     
     def predict(self, index_to_topics, test_document, prior_probabilities):
-        probabilities = (self.topic_wise_probability_matrices * test_document) * prior_probabilities
+        probabilities = self.topic_wise_probability_matrices * test_document
         probabilities = minmax_scale(probabilities, feature_range = (1,2))
-        probabilities = numpy.prod(probabilities, axis = 1) 
+        probabilities = numpy.prod(probabilities, axis = 1) * prior_probabilities
         return index_to_topics[numpy.argmax(probabilities)]
 
     def performance_evaluation(self, index_to_topics, topic_wise_test_matrices, type, test_iterations = 50):
