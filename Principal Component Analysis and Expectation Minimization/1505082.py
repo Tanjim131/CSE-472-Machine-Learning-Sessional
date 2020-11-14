@@ -36,15 +36,16 @@ class PCA:
         return np.hstack(matrix_w)
 
     def compute_transformed_input(self):
-        covariance_matrix = self.compute_covariance_matrix(self.input_data)
+        standardized_data = self.perform_standardization()
+        covariance_matrix = self.compute_covariance_matrix(standardized_data)
         eigen_values, eigen_vectors = self.compute_eigen_values_and_eigen_vectors(covariance_matrix)
         sorted_eigen_pairs = self.sort_eigen_pairs(eigen_values, eigen_vectors)
         new_basis = self.compute_new_basis(sorted_eigen_pairs)
-        transformed_input = np.dot(self.input_data, new_basis)
+        transformed_input = np.dot(standardized_data, new_basis)
         return transformed_input
     
     def plot_data(self, transformed_input):
-        plt.scatter(transformed_input[:, 0] , transformed_input[:, 1] * -1, marker = 'o', alpha = 0.6)
+        plt.scatter(transformed_input[:, 0] , transformed_input[:, 1] , marker = 'o', alpha = 0.6)
         plt.xlabel('PC-1')
         plt.ylabel('PC-2')
         plt.title('Transformed Input')
@@ -136,6 +137,7 @@ class EM:
             if(EM.converged(current_log_likelihood, previous_log_likelihood)):
                 break
             print("Iteration =", i, " Log Likelihood value =", current_log_likelihood)
+        return probabilities
         
 def main():
     input_data = Utility.parse_input()
